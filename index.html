@@ -10,6 +10,7 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    <script src="/Js/app.js"></script>
     <title>Todo</title>
   </head>
   <body>
@@ -41,32 +42,20 @@
               placeholder="Type your item.."
             />
             <div class="input-group-append">
-              <button class="btn btn-primary" type="button" id="add">
+              <button
+                onclick="additem()"
+                class="btn btn-primary"
+                type="button"
+                id="add"
+              >
                 Add TODO Item
               </button>
             </div>
           </div>
         </div>
-        <div class="card-footer text-muted">
-          <div class="input-group col-sm-10 col">
-            <input
-              type="text"
-              readonly
-              class="form-control-plaintext"
-              id="list"
-              value="Go shopping"
-            />
-            <div class="input-group-append" id="button-addon4">
-              <button class="btn btn-danger" type="button">
-                Delete
-              </button>
-              <button class="btn btn-success" type="button">
-                Edit
-              </button>
-            </div>
-          </div>
-        </div>
+        <div id="all" class="card-footer text-muted"></div>
       </div>
     </div>
+    <script></script>
   </body>
 </html>
