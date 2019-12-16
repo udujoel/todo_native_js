@@ -14,8 +14,59 @@
   </head>
   <body>
     <div class="container">
-      <h1>Welcome</h1>
-      <input type="text" required placeholder="Enter your Todo Item: " />
+      <div class="card text-center">
+        <div class="card-header space">
+          Todo Organiser
+        </div>
+        <div class="card-body ">
+          <h5 class="card-title">Fill your TODO list below</h5>
+          <div class="input-group col align-self-center input">
+            <input type="text" class="form-control" placeholder="Search" />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                id="search"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+          <br /><br />
+          <div class="input-group col align-self-center input">
+            <input
+              type="text"
+              class="form-control"
+              id="item"
+              placeholder="Type your item.."
+            />
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button" id="add">
+                Add TODO Item
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer text-muted">
+          <div class="input-group col-sm-10 col">
+            <input
+              type="text"
+              readonly
+              class="form-control-plaintext"
+              id="list"
+              value="Go shopping"
+            />
+            <div class="input-group-append" id="button-addon4">
+              <button class="btn btn-danger" type="button">
+                Delete
+              </button>
+              <button class="btn btn-success" type="button">
+                Edit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
