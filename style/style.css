@@ -1,5 +1,6 @@
 .vspace {
   margin-top: 20vh;
+  width: 50%;
 }
 table {
   border-collapse: collapse;
@@ -14,6 +15,6 @@ td {
 }
 
 tr:hover {
-  background-color: #9c8e8e;
+  background-color: #e73e3e4d;
   color: white;
 }

@@ -1,3 +1,5 @@
+let editmode = false;
+let editid = "";
 function get_todos() {
   var todos = new Array();
   var todos_str = localStorage.getItem("todo");
@@ -11,8 +13,13 @@ function add() {
   var task = document.getElementById("item").value;
 
   var todos = get_todos();
+  if (editmode) {
+    todos.splice(editid, 1);
+  }
   todos.push(task);
   localStorage.setItem("todo", JSON.stringify(todos));
+  document.getElementById("item").value = "";
+  document.getElementById("item").focus();
 
   show();
 
@@ -22,7 +29,7 @@ function add() {
 function del() {
   var id = this.getAttribute("id");
   var todos = get_todos();
-  todos.splice(id, 1);
+  todos.splice(editid, 1);
   localStorage.setItem("todo", JSON.stringify(todos));
 
   show();
@@ -30,10 +37,13 @@ function del() {
   return false;
 }
 function edit() {
+  editmode = true;
   var id = this.getAttribute("id");
+  editid = id;
   var todos = get_todos();
-  todos.splice(id, 1);
-  localStorage.setItem("todo", JSON.stringify(todos));
+
+  document.getElementById("item").value = todos[id];
+  document.getElementById("item").focus();
 
   show();
 
@@ -61,20 +71,19 @@ function show() {
       ${todos[i]}
           </td>
           <td>
-      ${Date.now()}
+      ${new Date(Date.now()).toGMTString()}
           </td>
           <td>
-      <button id="${i}" class="delete btn btn-danger "  type="button">Delete </button>
-                
+          <button id="${i}" class="edit btn btn-success edit" type="button">Edit </button>
           </td>
           <td>
-      <button id="${i}" class="edit btn btn-success edit" type="button">Edit </button>
+          <button id="${i}" class="delete btn btn-danger "  type="button">Delete </button>
+                    
              
           </td>
-      </tr>
-    
-      `;
+      </tr>`;
   }
+
   html += `</table>`;
 
   document.getElementById("all").innerHTML = html;
@@ -86,8 +95,22 @@ function show() {
     editbuttons[i].addEventListener("click", edit);
   }
 }
+function search() {
+  var query = document.getElementById("searchbox").value;
+  let name =[]
+  var todos = get_todos();
+  for (var i in window.localStorage) {
+    val = localStorage.getItem(i);
+    value = val.split(","); //splitting string inside array to get name
+    name[i] = value[1]; // getting name from split string
+    console.log(name[i]);
+    
+  }
+}
 
 document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("item").focus();
   document.getElementById("add").addEventListener("click", add);
+  document.getElementById("search").addEventListener("click", search);
   show();
 });
