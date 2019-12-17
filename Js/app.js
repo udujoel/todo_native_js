@@ -1,87 +1,93 @@
-// Disable form submissions if there are invalid fields
-// (function() {
-//   "use strict";
-//   window.addEventListener(
-//     "load",
-//     function() {
-//       // Get the forms we want to add validation styles to
-//       var item = document.getElementsByClassName("needs-validation");
-//       // Loop over them and prevent submission
-//       var validation = Array.prototype.filter.call(forms, function(item) {
-//         form.addEventListener(
-//           "submit",
-//           function(event) {
-//             if (form.checkValidity() === false) {
-//               event.preventDefault();
-//               event.stopPropagation();
-//             }
-//             form.classList.add("was-validated");
-//           },
-//           false
-//         );
-//       });
-//     },
-//     false
-//   );
-// })();
-let count = window.localStorage.getItem("count");
-document.addEventListener("DOMContentLoaded", function() {
-  console.log("Your document is ready!");
-
-  document.getElementById("item").focus();
-
-  for (var i = 0; i < localStorage.length; i++) {
-    // $("body").append(localStorage.getItem(localStorage.key(i)));
-    let val = localStorage.getItem(localStorage.key(i));
-    document.getElementById(
-      "all"
-    ).innerHTML += `<div id="all" class="input-group col-sm-10 col">
-            <input
-              type="text"
-              readonly
-              class="form-control-plaintext"
-              id="list"
-              value="${val}"
-            />
-            <div class="input-group-append" id="button-addon4">
-              <button class="btn btn-danger" id="del" type="button">
-                Delete
-              </button>
-              <button class="btn btn-success" id="edit" type="button">
-                Edit
-              </button>
-            </div>
-          </div>`;
+function get_todos() {
+  var todos = new Array();
+  var todos_str = localStorage.getItem("todo");
+  if (todos_str !== null) {
+    todos = JSON.parse(todos_str);
   }
-});
-
-function additem() {
-  //   let item = "";
-  let newItem = document.getElementById("item").value;
-  newItem = window.localStorage.setItem(count, newItem);
-  count++;
-  window.localStorage.setItem("count", count);
-  document.getElementById("list").value = document.getElementById("item").value;
-  document.getElementById(
-    "all"
-  ).innerHTML += `<div id="all" class="input-group col-sm-10 col">
-            <input
-              type="text"
-              readonly
-              class="form-control-plaintext"
-              id="list"
-              value="${document.getElementById("item").value}"
-            />
-            <div class="input-group-append" id="button-addon4">
-              <button class="btn btn-danger" id="del" type="button">
-                Delete
-              </button>
-              <button class="btn btn-success" id="edit" type="button">
-                Edit
-              </button>
-            </div>
-          </div>`;
-  // empty the field
-  newItem = document.getElementById("item").value = "";
-  document.getElementById("item").focus();
+  return todos;
 }
+
+function add() {
+  var task = document.getElementById("item").value;
+
+  var todos = get_todos();
+  todos.push(task);
+  localStorage.setItem("todo", JSON.stringify(todos));
+
+  show();
+
+  return false;
+}
+
+function del() {
+  var id = this.getAttribute("id");
+  var todos = get_todos();
+  todos.splice(id, 1);
+  localStorage.setItem("todo", JSON.stringify(todos));
+
+  show();
+
+  return false;
+}
+function edit() {
+  var id = this.getAttribute("id");
+  var todos = get_todos();
+  todos.splice(id, 1);
+  localStorage.setItem("todo", JSON.stringify(todos));
+
+  show();
+
+  return false;
+}
+
+function show() {
+  var todos = get_todos();
+
+  // var html = `<div id="all" class="input-group flex-c">`;
+  var html = `<table>
+  <tr>
+  <th>#</th>
+    <th>Todo Item</th>
+    <th>Time</th>
+    <th></th>
+    <th></th>
+  </tr>`;
+  for (var i = 0; i < todos.length; i++) {
+    html += `<tr>
+          <td>
+          ${i + 1}
+          </td>
+          <td>
+      ${todos[i]}
+          </td>
+          <td>
+      ${Date.now()}
+          </td>
+          <td>
+      <button id="${i}" class="delete btn btn-danger "  type="button">Delete </button>
+                
+          </td>
+          <td>
+      <button id="${i}" class="edit btn btn-success edit" type="button">Edit </button>
+             
+          </td>
+      </tr>
+    
+      `;
+  }
+  html += `</table>`;
+
+  document.getElementById("all").innerHTML = html;
+
+  var delbuttons = document.getElementsByClassName("delete");
+  var editbuttons = document.getElementsByClassName("edit");
+  for (var i = 0; i < delbuttons.length; i++) {
+    delbuttons[i].addEventListener("click", del);
+    editbuttons[i].addEventListener("click", edit);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("add").addEventListener("click", add);
+  show();
+});

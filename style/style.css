@@ -1,1 +1,19 @@
+.vspace {
+  margin-top: 20vh;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
 
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  /* border-bottom: 1px solid #ddd; */
+}
+
+tr:hover {
+  background-color: #9c8e8e;
+  color: white;
+}
