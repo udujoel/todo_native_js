@@ -97,14 +97,13 @@ function show() {
 }
 function search() {
   var query = document.getElementById("searchbox").value;
-  let name =[]
+  let name = [];
   var todos = get_todos();
   for (var i in window.localStorage) {
     val = localStorage.getItem(i);
     value = val.split(","); //splitting string inside array to get name
     name[i] = value[1]; // getting name from split string
     console.log(name[i]);
-    
   }
 }
 
@@ -114,3 +113,5 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("search").addEventListener("click", search);
   show();
 });
+
+module.exports =  { add, del, edit, show };
